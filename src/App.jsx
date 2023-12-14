@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { increase, decrease, multiply } from './counterSlice'
+import { increase, decrease, multiply, reset } from './counterSlice'
 
 function App() {
 
@@ -15,6 +15,11 @@ function App() {
     setInput(e.target.value)
   }
 
+  function handleMultiply() {
+    dispatch(multiply(input))
+    setInput(0);
+  }
+
   return (
     <div>
       <h3> Counter: {counter}</h3>
@@ -24,7 +29,9 @@ function App() {
       <br /> <br />
       <button onClick={() => dispatch(decrease())}>Decrease</button>
       <br /> <br />
-      <button onClick={() => dispatch(multiply(input))}>Times Input</button>
+      <button onClick={handleMultiply}>Times Input</button>
+      <br /><br />
+      <button onClick={() => dispatch(reset())}>Reset Counter</button>
     </div>
   )
 }
