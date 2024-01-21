@@ -1,22 +1,18 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { increase, decrease, multiply, reset } from './counterSlice'
+import { useState, useContext } from 'react'
+import { useCounterContext } from "./counterContext"
 
 function App() {
 
   const [input, setInput] = useState(0)
-
-
-  const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counter)
-  console.log(counter);
+  const { dispatch, counter } = useCounterContext();
+  // console.log(dispatch, counter)
 
   function handleChange(e) {
     setInput(e.target.value)
   }
 
   function handleMultiply() {
-    dispatch(multiply(input))
+    dispatch({type: "MULTIPLY", payload: input})
     setInput(0);
   }
 
@@ -25,13 +21,13 @@ function App() {
       <h3> Counter: {counter}</h3>
       <input type="number" onChange={handleChange} value={input}/>
       <br />
-      <button onClick={() => dispatch(increase())}>Increase</button>
+      <button onClick={() => dispatch({type: "INCREASE"})}>Increase</button>
       <br /> <br />
-      <button onClick={() => dispatch(decrease())}>Decrease</button>
+      <button onClick={() => dispatch({type: "DECREASE"})}>Decrease</button>
       <br /> <br />
       <button onClick={handleMultiply}>Times Input</button>
       <br /><br />
-      <button onClick={() => dispatch(reset())}>Reset Counter</button>
+      <button onClick={() => dispatch({type: "RESET"})}>Reset Counter</button>
     </div>
   )
 }
